@@ -6,7 +6,7 @@ namespace LibraryManagement.Models
 {
     internal class BorrowRecord
     {
-        public BorrowRecord(int borrowRecordId, int bookId, int memberID, DateTime borrowDate)
+        public BorrowRecord(string borrowRecordId, int bookId, int memberID, DateTime borrowDate)
         {
             BorrowRecordId = borrowRecordId;
             BookId = bookId;
@@ -15,7 +15,7 @@ namespace LibraryManagement.Models
             ReturnDate = null;
         }
 
-        public int BorrowRecordId { get;}
+        public string BorrowRecordId { get;}
        public  int BookId { set; get; }
        public int MemberID{ set; get; }
        public DateTime BorrowDate { set; get; }
