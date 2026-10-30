@@ -1,40 +1,52 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using LibraryBooksSystem.Models;
 using LibraryManagement.Models;
 
 namespace LibraryManagement.Services
 {
     public class ReportService
     {
-        public int TotalBooks(List<Book> books)
+        public ReportService(List<Book> books, List<Member> members, List<BorrowRecord> records)
         {
-            return books.Count;
+            Books = books;
+            Members = members;
+            Records = records;
+           
+
+        }
+        public List<Book> AvialableBooks;
+        public  List<Book> Books { set; get; }
+        public List <Member> Members { set; get; }
+        public List<BorrowRecord> Records { set; get; }
+        public int TotalBooks()
+        {
+            return Books.Count;
         }
 
-        public int AvailableBooksCount(List<Book> books)
+        public int AvailableBooksCount()
         {
-            return books.Count(b => b.IsAvailable);
+            return Books.Count(b => b.IsAvailable);
         }
 
-        public int BorrowedBooksCount(List<Book> books)
+        public int BorrowedBooksCount()
         {
-            return books.Count(b => !b.IsAvailable);
+            return Records.Count();
+        }
+        public int TotalMembers()
+        {
+            return Members.Count;
         }
 
-        public int TotalMembers(List<Member> members)
+        public int ActiveBorrowingsCount()
         {
-            return members.Count;
+            return Records.Count(r => r.ReturnDate == null);
         }
 
-        public int ActiveBorrowingsCount(List<BorrowRecord> records)
+        public string MostBorrowedBook()
         {
-            return records.Count(r => r.ReturnDate == null);
-        }
-
-        public string MostBorrowedBook(List<Book> books, List<BorrowRecord> records)
-        {
-            var result = records
+            var result = Records
                 .GroupBy(r => r.BookId)
                 .OrderByDescending(g => g.Count())
                 .FirstOrDefault();
@@ -44,7 +56,7 @@ namespace LibraryManagement.Services
                 return "No borrowing history available";
             }
 
-            Book book = books.FirstOrDefault(b => b.Id == result.Key);
+            Book book = Books.FirstOrDefault(b => b.Id == result.Key);
 
             if (book == null)
             {
@@ -54,9 +66,9 @@ namespace LibraryManagement.Services
             return $"{book.Title} : {result.Count()} times";
         }
 
-        public string MostActiveMember(List<Member> members, List<BorrowRecord> records)
+        public string MostActiveMember()
         {
-            var result = records
+            var result = Records
                 .GroupBy(r => r.MemberID)
                 .OrderByDescending(g => g.Count())
                 .FirstOrDefault();
@@ -66,7 +78,7 @@ namespace LibraryManagement.Services
                 return "No borrowing history available";
             }
 
-            Member member = members.FirstOrDefault(m => m.Id == result.Key);
+            Member member = Members.FirstOrDefault(m => m.Id == result.Key);
 
             if (member == null)
             {
@@ -76,17 +88,17 @@ namespace LibraryManagement.Services
             return $"{member.Name} : {result.Count()} borrowings";
         }
 
-        public void DisplayReport(List<Book> books, List<Member> members, List<BorrowRecord> records)
+        public void DisplayReport()
         {
             Console.WriteLine();
             Console.WriteLine("LIBRARY REPORT");
-            Console.WriteLine($"Total Books: {TotalBooks(books)}");
-            Console.WriteLine($"Available Books: {AvailableBooksCount(books)}");
-            Console.WriteLine($"Borrowed Books: {BorrowedBooksCount(books)}");
-            Console.WriteLine($"Total Members: {TotalMembers(members)}");
-            Console.WriteLine($"Active Borrowings: {ActiveBorrowingsCount(records)}");
-            Console.WriteLine($"Most Borrowed Book: {MostBorrowedBook(books, records)}");
-            Console.WriteLine($"Most Active Member: {MostActiveMember(members, records)}");
+            Console.WriteLine($"Total Books: {TotalBooks()}");
+            Console.WriteLine($"Available Books: {AvailableBooksCount()}");
+            Console.WriteLine($"Borrowed Books: {BorrowedBooksCount()}");
+            Console.WriteLine($"Total Members: {TotalMembers()}");
+            Console.WriteLine($"Active Borrowings: {ActiveBorrowingsCount()}");
+            Console.WriteLine($"Most Borrowed Book: {MostBorrowedBook()}");
+            Console.WriteLine($"Most Active Member: {MostActiveMember()}");
         }
     }
 }

@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using LibraryBooksSystem.Models;
+using LibraryManagement.Models;
 
 namespace LibraryBooksSystem.Services
 {
     public class MemberService
     {
         private List<Member> _members;
-        private List<BorrowRecord> _records;
+        public  List<BorrowRecord> _records;
 
         public MemberService(List<Member> members, List<BorrowRecord> records)
         {
@@ -91,7 +92,7 @@ namespace LibraryBooksSystem.Services
             if (member == null)
                 return ServiceResult.Fail("Member not found.");
 
-            bool hasBorrowedBook = _records.Any(r => r.MemberId == id && r.ReturnDate == null);
+            bool hasBorrowedBook = _records.Any(r => r.MemberID == id && r.ReturnDate == null);
 
             if (hasBorrowedBook)
                 return ServiceResult.Fail("This member still holds borrowed books and cannot be deleted.");
