@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LibraryManagement.Models
 {
-    internal class BorrowRecord
+    public class BorrowRecord
     {
         public BorrowRecord(string borrowRecordId, int bookId, int memberID, DateTime borrowDate)
         {

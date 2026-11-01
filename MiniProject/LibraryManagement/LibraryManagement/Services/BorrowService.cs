@@ -20,7 +20,7 @@ namespace LibraryManagement.Services
 
         public ServiceResult<BorrowRecord> BorrowBook(int memberId, int bookId)
         {
-            MemberService memberService = new MemberService(Members, Records);
+            MemberService memberService = new MemberService(Members);
             BookServices bookServices = new BookServices(AvialbleBooks);
             var message = "faild";
 
@@ -42,7 +42,7 @@ namespace LibraryManagement.Services
                 message = "user not Allowed To Borrow";
                 return ServiceResult<BorrowRecord>.Fail(message);
             }
-            var book = bookServices.SearchById(bookId);
+            var book = bookServices.FindById(bookId);
             if (book is null)
             {
                 message = "Book is not Found";
