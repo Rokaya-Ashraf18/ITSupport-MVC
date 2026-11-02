@@ -10,7 +10,7 @@ internal static class LibraryConsole
     private static readonly BookServices bookService = new(books);
     private static readonly MemberService memberService = new(members);
     private static readonly LibraryBorrowCoordinator borrowing = new(books, members, records);
-    private static readonly ReportService reports = new();
+    private static readonly ReportService reports = new(books, members, records);
     public static void Run()
     {
         while (true)
@@ -34,7 +34,7 @@ internal static class LibraryConsole
                     Search();
                     break;
                 case 6:
-                    reports.DisplayReport(books, members, records);
+                    reports.DisplayReport();
                     break;
                 case 0:
                     return;
