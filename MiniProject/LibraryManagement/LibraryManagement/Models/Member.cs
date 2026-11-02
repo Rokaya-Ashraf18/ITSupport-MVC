@@ -1,13 +1,3 @@
-﻿namespace LibraryBooksSystem.Models
-{
-    public class Member : Person
-    {
-        public string Email { get; set; }
+﻿namespace LibraryManagement.Models;
 
-        public Member(int id, string name, string email)
-            : base(id, name)
-        {
-            Email = email;
-        }
-    }
-}
+public class Member : Person { public string Email { get; set; } = ""; }

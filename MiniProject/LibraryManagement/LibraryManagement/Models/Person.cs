@@ -1,14 +1,3 @@
-﻿namespace LibraryBooksSystem.Models
-{
-    public abstract class Person
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
+﻿namespace LibraryManagement.Models;
 
-        public Person(int id, string name)
-        {
-            Id = id;
-            Name = name;
-        }
-    }
-}
+public class Person { public int Id { get; set; } public string Name { get; set; } = ""; }

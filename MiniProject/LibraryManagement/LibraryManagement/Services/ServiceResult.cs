@@ -1,46 +1,18 @@
-﻿namespace LibraryBooksSystem.Services
+﻿namespace LibraryManagement.Services;
+
+internal class ServiceResult
 {
-    public class ServiceResult
-    {
-        public bool Success { get; set; }
-        public string Message { get; set; }
+    public bool Success { get; }
+    public string Message { get; }
+    protected ServiceResult(bool success, string message) { Success = success; Message = message; }
+    public static ServiceResult Ok(string message) => new(true, message);
+    public static ServiceResult Fail(string message) => new(false, message);
+}
 
-        public static ServiceResult Ok(string message)
-        {
-            ServiceResult result = new ServiceResult();
-            result.Success = true;
-            result.Message = message;
-            return result;
-        }
-
-        public static ServiceResult Fail(string message)
-        {
-            ServiceResult result = new ServiceResult();
-            result.Success = false;
-            result.Message = message;
-            return result;
-        }
-    }
-
-    public class ServiceResult<T> : ServiceResult
-    {
-        public T Data { get; set; }
-
-        public static ServiceResult<T> Ok(T data, string message)
-        {
-            ServiceResult<T> result = new ServiceResult<T>();
-            result.Success = true;
-            result.Message = message;
-            result.Data = data;
-            return result;
-        }
-
-        public new static ServiceResult<T> Fail(string message)
-        {
-            ServiceResult<T> result = new ServiceResult<T>();
-            result.Success = false;
-            result.Message = message;
-            return result;
-        }
-    }
+internal sealed class ServiceResult<T> : ServiceResult
+{
+    public T? Data { get; }
+    private ServiceResult(bool success, string message, T? data) : base(success, message) { Data = data; }
+    public static ServiceResult<T> Ok(T data, string message) => new(true, message, data);
+    public new static ServiceResult<T> Fail(string message) => new(false, message, default);
 }

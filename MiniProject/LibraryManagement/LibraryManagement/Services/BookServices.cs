@@ -7,13 +7,17 @@ namespace LibraryManagement.Services
 {
     internal class BookServices
     {
-        List<Book> Books = new List<Book>();
+        private readonly List<Book> books;
+
+        public BookServices()
+        {
+            books = new List<Book>();
+        }
 
         public BookServices(List<Book> books)
         {
-            Books = books;
+            this.books = books;
         }
-
         public void Add(Book book)
         {
             Books.Add(book);
@@ -79,6 +83,10 @@ namespace LibraryManagement.Services
             Book book = Books.FirstOrDefault(x => x.Id == id);
 
             return book != null && book.IsAvailable;
+        }
+        public Book? FindById(int id)
+        {
+            return books.FirstOrDefault(b => b.Id == id);
         }
 
     }
