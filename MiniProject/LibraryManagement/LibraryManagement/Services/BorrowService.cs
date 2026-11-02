@@ -1,4 +1,6 @@
-﻿using LibraryManagement.Models;
+﻿using LibraryBooksSystem.Models;
+using LibraryBooksSystem.Services;
+using LibraryManagement.Models;
 
 namespace LibraryManagement.Services
 {
@@ -6,11 +8,12 @@ namespace LibraryManagement.Services
     {
         private readonly int borrow_limit = 3;
 
-        public BorrowServicecs(List<Book> avialbleBooks, List<Member> members, List<BorrowRecord> records)
+        public BorrowServicecs(List<Book> avialbleBooks, List<Member> members,List <BorrowRecord> records)
         {
             AvialbleBooks = avialbleBooks;
             Members = members;
             Records = records;
+           
         }
 
 
@@ -25,14 +28,17 @@ namespace LibraryManagement.Services
             var message = "faild";
 
 
-
             if (memberService.GetMemberById(memberId) is null)
             {
                 message = "Member not found.";
                 return ServiceResult<BorrowRecord>.Fail(message);
             }
 
-            var timesOfBorrow = Records.Count(x => x.MemberID == memberId && x.ReturnDate is null);
+            var timesOfBorrow = 0;
+            if (Records is not null) {
+                timesOfBorrow = Records.Count(x => x.MemberID == memberId && x.ReturnDate is null);
+            }
+           
 
             bool userAllowedToBorrow() => timesOfBorrow < borrow_limit;
 
@@ -63,7 +69,12 @@ namespace LibraryManagement.Services
             var record = new BorrowRecord(borrowId, bookId, memberId, DateTime.Now);
 
             Records.Add(record);
-            book.IsAvailable = false;
+            book.StockQuantity--;
+
+            if (book.StockQuantity == 0)
+            {
+                book.IsAvailable = false;
+            }
             return ServiceResult<BorrowRecord>.Ok(record, message);
         }
 
@@ -86,6 +97,8 @@ namespace LibraryManagement.Services
             }
 
             valid.ReturnDate = DateTime.Now;
+
+            book.StockQuantity++;
 
             book.IsAvailable = true;
             message = "Book Returned Successfully";

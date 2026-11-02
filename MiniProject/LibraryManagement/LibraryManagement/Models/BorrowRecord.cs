@@ -14,7 +14,10 @@ namespace LibraryManagement.Models
             BorrowDate = borrowDate;
             ReturnDate = null;
         }
-
+        public BorrowRecord()
+        {
+            
+        }
         public string BorrowRecordId { get;}
        public  int BookId { set; get; }
        public int MemberID{ set; get; }

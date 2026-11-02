@@ -20,16 +20,16 @@ namespace LibraryManagement.Services
         }
         public void Add(Book book)
         {
-            books.Add(book);
+            Books.Add(book);
         }
         public void Delete(int id)
         {
-            Book book = books.FirstOrDefault(x => x.Id == id);
-           if(book != null) books.Remove(book);
+            Book book = Books.FirstOrDefault(x => x.Id == id);
+           if(book != null) Books.Remove(book);
         }
         public void Update(int id,Book _book)
         {
-            Book book = books.FirstOrDefault(x => x.Id == id);
+            Book book = Books.FirstOrDefault(x => x.Id == id);
             if (book != null) 
             {
                 book.Id = _book.Id;
@@ -44,7 +44,7 @@ namespace LibraryManagement.Services
         }
         public void DisplayAllBooks() 
         {
-            var _books = books.OrderBy(x => x.Id).ToList();
+            var _books = Books.OrderBy(x => x.Id).ToList();
             foreach (var item in _books)
             {
                 //Console.WriteLine($"===========================");
@@ -55,24 +55,23 @@ namespace LibraryManagement.Services
         }
         public void DisplayBookByID(int id) 
         {
-            Book book = books.FirstOrDefault(x => x.Id==id);
-          
-                Console.WriteLine($"ID : {book.Id}\nTitle : {book.Title}\nAuthor : {book.Author}\nPrice : {book.Price}");
-                Console.WriteLine($"Category : {book.Category}\nStockQuantity : {book.StockQuantity}\nIsAvailable : {book.IsAvailable}");
-            
+            Book  book = Books.FirstOrDefault(x => x.Id==id);
+
+
+            Console.WriteLine($"ID : {book.Id}\nTitle : {book.Title}\nAuthor : {book.Author}\nPrice : {book.Price}");
+            Console.WriteLine($"Category : {book.Category}\nStockQuantity : {book.StockQuantity}\nIsAvailable : {book.IsAvailable}");
+
         }
-        public void SearchById(int id)
+        public Book? SearchById(int id)
         {
-            Book book = books.FirstOrDefault(x => x.Id == id);
-            if (book != null)
-                DisplayBookByID(book.Id);
-            else
-                Console.WriteLine("There is no book with this id");
+            Book ?book = Books.FirstOrDefault(x => x.Id == id);
+            return book;
+            
         }
         public void SearchByTitle(string title)
         {
 
-            Book book = books.FirstOrDefault(x => x.Title.Equals( title, StringComparison.OrdinalIgnoreCase));
+            Book book = Books.FirstOrDefault(x => x.Title.Equals( title, StringComparison.OrdinalIgnoreCase));
             if (book != null)
                 DisplayBookByID(book.Id);
             else
@@ -81,7 +80,7 @@ namespace LibraryManagement.Services
         }
         public bool IsBookAvailable(int id)
         {
-            Book book = books.FirstOrDefault(x => x.Id == id);
+            Book book = Books.FirstOrDefault(x => x.Id == id);
 
             return book != null && book.IsAvailable;
         }
