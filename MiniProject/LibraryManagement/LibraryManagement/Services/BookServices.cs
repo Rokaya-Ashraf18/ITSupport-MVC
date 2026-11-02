@@ -36,6 +36,7 @@ namespace LibraryManagement.Services
                 book.Title = _book.Title;
                 book.Author = _book.Author;
                 book.Price = _book.Price;
+                 book.StockQuantity = _book.StockQuantity;
                 book.Category = _book.Category;
                 book.IsAvailable = _book.IsAvailable;
             }
@@ -48,7 +49,7 @@ namespace LibraryManagement.Services
             {
                 //Console.WriteLine($"===========================");
                 Console.WriteLine($"ID : {item.Id}\nTitle : {item.Title}\nAuthor : {item.Author}\nPrice : {item.Price}");
-                Console.WriteLine($"Category : {item.Category}\nIsAvailable : {item.IsAvailable}");
+                Console.WriteLine($"Category : {item.Category}\nStockQuantity : {book.StockQuantity}\nIsAvailable : {item.IsAvailable}");
                 Console.WriteLine($"===========================");
             }
         }
@@ -58,7 +59,7 @@ namespace LibraryManagement.Services
 
 
             Console.WriteLine($"ID : {book.Id}\nTitle : {book.Title}\nAuthor : {book.Author}\nPrice : {book.Price}");
-            Console.WriteLine($"Category : {book.Category}\nIsAvailable : {book.IsAvailable}");
+            Console.WriteLine($"Category : {book.Category}\nStockQuantity : {book.StockQuantity}\nIsAvailable : {book.IsAvailable}");
 
         }
         public Book? SearchById(int id)
