@@ -49,7 +49,7 @@ namespace LibraryManagement.Services
             {
                 //Console.WriteLine($"===========================");
                 Console.WriteLine($"ID : {item.Id}\nTitle : {item.Title}\nAuthor : {item.Author}\nPrice : {item.Price}");
-                Console.WriteLine($"Category : {item.Category}\nStockQuantity : {book.StockQuantity}\nIsAvailable : {item.IsAvailable}");
+                Console.WriteLine($"Category : {item.Category}\nStockQuantity : {item.StockQuantity}\nIsAvailable : {item.IsAvailable}");
                 Console.WriteLine($"===========================");
             }
         }
